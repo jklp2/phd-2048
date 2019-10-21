@@ -203,7 +203,7 @@ GameManager.prototype.move = function (direction) {
               if (next.value > self.maxTile) self.maxTile = next.value;
               if (next.value >= 2048) self.won = true;
               next.benefitedFrom = self.relTime;
-              self.karma++;
+              //self.karma++;
               moved = true;
             }
           }
@@ -219,8 +219,8 @@ GameManager.prototype.move = function (direction) {
         else if (next && next.value === tile.value && !next.mergedFrom) {
           if(next.value != 0) {
             if((self.maxTile < 256 || self.garbCount % 2 > 0)
-              && ((next.value == 8 && Math.random() >= 0.8)
-              || (next.value == 128 && Math.random() >= 0.85))) {
+              && ((next.value == 8 && Math.random() >= 1)
+              || (next.value == 128 && Math.random() >= 1))) {
               var merged = new Tile(positions.next, 0);
               self.garbCount++;
             }
@@ -377,7 +377,8 @@ GameManager.prototype.unsetTimer = function () {
     delete this.timer;
   }
   if(this.karma <= 0){
-    var changes = this.grid.clearRelationship(true);
+    var changes = this.grid.clearRelationship(false);
+	changes=false;
     if(changes){
       this.garbCount += changes;
       this.actuate();
